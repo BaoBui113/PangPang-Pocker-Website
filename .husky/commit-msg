@@ -1,0 +1,22 @@
+#!/bin/sh
+# Validate commit message format
+# Expected format: type(scope): subject
+# Examples:
+# feat: add new feature
+# fix: resolve bug issue  
+# docs: update README
+# style: format code
+# refactor: improve code structure
+# test: add unit tests
+# chore: update dependencies
+
+commit_regex='^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .{1,50}'
+
+if ! grep -qE "$commit_regex" "$1"; then
+    echo "Invalid commit message format!"
+    echo "Expected format: type(scope): subject"
+    echo "Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert"
+    echo "Example: feat: add user authentication"
+    echo "Example: fix(auth): resolve login issue"
+    exit 1
+fi
